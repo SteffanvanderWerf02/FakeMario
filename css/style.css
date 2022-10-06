@@ -1,0 +1,8 @@
+.titlescreen {
+    background: url('../img/homescreenbg.png');
+    background-size: contain;
+}
+.title {
+    color: black;
+    text-shadow: 1px -3px black;
+}
