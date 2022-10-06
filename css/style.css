@@ -6,3 +6,7 @@
     color: black;
     text-shadow: 1px -3px black;
 }
+.pointer {
+    cursor: pointer;
+    font-weight: bold;
+}

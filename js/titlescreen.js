@@ -13,10 +13,9 @@ new Typed('.typedJS',
 
 document.addEventListener("DOMContentLoaded", () => {
     let begin = document.getElementById("StartGame");
-    let highscores = document.getElementById("Highscores");
-    let question = document.getElementById("newQuestions");
 
-    question.addEventListener("click", {
+
+    begin.addEventListener("click", {
 
     })
 })
