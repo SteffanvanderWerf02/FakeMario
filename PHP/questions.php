@@ -19,6 +19,7 @@ if ($_GET['f'] == 'getQuestions') {
 
     $sql = "
         SELECT  
+              answers.id,
               answers.Answer,
               answers.Correct
         FROM  answers
@@ -28,9 +29,10 @@ if ($_GET['f'] == 'getQuestions') {
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $id);
     $stmt->execute();
-    $stmt->bind_result($answer, $correct);
+    $stmt->bind_result($aId, $answer, $correct);
     while ($stmt->fetch()) {
       $answers[] = array(
+        'answerId' => $aId,
         'answer' => $answer,
         'isCorrect' => $correct
       );
@@ -43,16 +45,76 @@ if ($_GET['f'] == 'getQuestions') {
 }
 
 if ($_GET['f'] == 'editQuestion') {
+  print_r($_GET);
+  $sql = "
+    UPDATE questions
+    SET Question = ?
+    WHERE Id = ?";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('si', $_GET['question'], $_GET['id']);
+  $stmt->execute();
+  $stmt->close();
+
+  $answerArray = [$_GET['answerA'], $_GET['answerB'], $_GET['answerC'], $_GET['answerD']];
+  foreach ($answerArray as $answer) {
+    $answer = str_replace("[", "", $answer);
+    $answer = str_replace("]", "", $answer);
+
+
+
+    $answer = explode(",", $answer);
+    $answerId = $answer[0];
+    $answerText = $answer[1];
+
+    echo "<br>" . $answerId . " " . $answerText;
+    $sql = "
+    UPDATE answers
+    SET Answer = ?
+    WHERE Id = ?
+  ";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('si', $answerText, $answerId);
+    $stmt->execute();
+    $stmt->close();
+  }
 }
 
 if ($_GET['f'] == 'getQuestion') {
-  $sql = "SELECT * FROM questions WHERE id = ?";
+  $sql = "
+  SELECT  questions.Id,
+          questions.Question
+  FROM questions
+  WHERE questions.Id = ?
+  ";
   $stmt = $mysqli->prepare($sql);
   $stmt->bind_param('i', $_GET["id"]);
   $stmt->execute();
-  $stmt->bind_result($id, $question, $answer, $wrong1, $wrong2, $wrong3);
+  $stmt->bind_result($id, $question);
   $stmt->fetch();
-  $questions[] = array('id' => $id, 'question' => $question, 'answer' => $answer, 'wrong1' => $wrong1, 'wrong2' => $wrong2, 'wrong3' => $wrong3);
+  $stmt->close();
+
+  $sql = "
+      SELECT 
+            answers.id, 
+            answers.Answer,
+            answers.Correct
+      FROM  answers
+      WHERE answers.QuestionId = ?
+      LIMIT 4
+  ";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('i', $id);
+  $stmt->execute();
+  $stmt->bind_result($aId, $answer, $correct);
+  while ($stmt->fetch()) {
+    $answers[] = array(
+      'answerId' => $aId,
+      'answer' => $answer,
+      'isCorrect' => $correct
+    );
+  }
+  $stmt->close();
+  $questions[] = array('id' => $id, 'question' => $question, 'answers' => $answers);
 
   echo json_encode($questions);
 }

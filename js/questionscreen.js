@@ -6,6 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let questionList = document.getElementById("qlist")
     let questionEditSaveBtn = document.getElementById("questionEditSave");
 
+    //input fields
+
+    let questionId = document.getElementById("uniqueId");
+    let questionField = document.getElementById("editQuestionInput");
+    let answerAField = document.getElementById("editAwnserInputA");
+    let answerBField = document.getElementById("editAwnserInputB");
+    let answerCField = document.getElementById("editAwnserInputC");
+    let answerDField = document.getElementById("editAwnserInputD");
+
     question.addEventListener("click", () => {
         questionScreen.classList.add("d-block");
         questionScreen.classList.remove("d-none");
@@ -15,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     questionEditScreenBtn.addEventListener("click", () => {
+        questionList.innerHTML = "";
         questionEditScreen.classList.remove("d-none");
         questionScreen.classList.add("d-none");
 
@@ -33,12 +43,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 document.getElementById("editTitle").innerHTML = "Question " + data[0].id;
-                document.getElementById("uniqueId").setAttribute("value", + data[0].id);
-                document.getElementById("editQuestionInput").setAttribute("value", data[0].question);
-                document.getElementById("editAwnserInput").setAttribute("value", data[0].answer);
-                document.getElementById("editWrong1Input").setAttribute("value", data[0].wrong1);
-                document.getElementById("editWrong2Input").setAttribute("value", data[0].wrong2);
-                document.getElementById("editWrong3Input").setAttribute("value", data[0].wrong3);
+                questionId.value = data[0].id;
+                questionField.value = data[0].question;
+                answerAField.value = data[0].answers[0].answer;
+                answerAField.setAttribute("awnserId", data[0].answers[0].answerId);
+                answerBField.value = data[0].answers[1].answer;
+                answerBField.setAttribute("awnserId", data[0].answers[1].answerId);
+                answerCField.value = data[0].answers[2].answer;
+                answerCField.setAttribute("awnserId", data[0].answers[2].answerId);
+                answerDField.value = data[0].answers[3].answer;
+                answerDField.setAttribute("awnserId", data[0].answers[3].answerId);
             }
         }
     });
@@ -49,24 +63,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     questionEditSaveBtn.addEventListener("click", () => {
         editQuestion(
-            document.getElementById("uniqueId").getAttribute("value"),
-            document.getElementById("editQuestionInput").getAttribute("value"),
-            document.getElementById("editAwnserInput").getAttribute("value"),
-            document.getElementById("editWrong1Input").getAttribute("value"),
-            document.getElementById("editWrong2Input").getAttribute("value"),
-            document.getElementById("editWrong3Input").getAttribute("value"),
+            questionId.value,
+            questionField.value,
+            [answerAField.getAttribute("awnserId"), answerAField.value],
+            [answerBField.getAttribute("awnserId"), answerBField.value],
+            [answerCField.getAttribute("awnserId"), answerCField.value],
+            [answerDField.getAttribute("awnserId"), answerDField.value],
         )
-        loadQuestiontoInput(document.getElementById("uniqueId").getAttribute("value"));
     });
 
     function loadQuestions() {
+        document.getElementById("questionTable").innerHTML = "";
         let http = new XMLHttpRequest()
         http.open("GET", "./PHP/questions.php?f=getQuestions", true);
         http.send();
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.response);
-                console.log(data);
                 var table = document.createElement('table');
                 table.classList.add("table", "table-striped", "table-hover");
                 var thead = document.createElement('thead');
@@ -104,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 thead.appendChild(tr);
                 table.appendChild(thead);
-                console.log(Object.keys(data).length)
                 var tbody = document.createElement('tbody');
                 for (var i = 0; i < Object.keys(data).length; i++) {
                     var tr = document.createElement('tr');
@@ -151,30 +163,34 @@ document.addEventListener("DOMContentLoaded", () => {
             if (this.readyState == 4 && this.status == 200) {
 
                 let data = JSON.parse(this.response);
+                console.log(data);
                 document.getElementById("editTitle").innerHTML = "Question " + data[0].id;
-                document.getElementById("uniqueId").setAttribute("value", data[0].id);
-                document.getElementById("editQuestionInput").setAttribute("value", data[0].question);
-                document.getElementById("editAwnserInput").setAttribute("value", data[0].answer);
-                document.getElementById("editWrong1Input").setAttribute("value", data[0].wrong1);
-                document.getElementById("editWrong2Input").setAttribute("value", data[0].wrong2);
-                document.getElementById("editWrong3Input").setAttribute("value", data[0].wrong3);
+                questionId.value = data[0].id;
+                questionField.value = data[0].question;
+                answerAField.value = data[0].answers[0].answer;
+                answerAField.setAttribute("awnserId", data[0].answers[0].answerId);
+                answerBField.value = data[0].answers[1].answer;
+                answerBField.setAttribute("awnserId", data[0].answers[1].answerId);
+                answerCField.value = data[0].answers[2].answer;
+                answerCField.setAttribute("awnserId", data[0].answers[2].answerId);
+                answerDField.value = data[0].answers[3].answer;
+                answerDField.setAttribute("awnserId", data[0].answers[3].answerId);
             }
         }
     }
 
-    function editQuestion(id, question, answer, wrong1, wrong2, wrong3) {
+    function editQuestion(id, question, answerA, answerB, answerC, answerD) {
         if (id == "") {
-            return;
+            alert("Please select a question");
         }
         let http = new XMLHttpRequest();
-        console.log("./PHP/questions.php?f=editQuestion&q=" + question + "&a=" + answer + "&w1=" + wrong1 + "&w2=" + wrong2 + "&w3=" + wrong3 + "&id=" + id)
-        http.open("GET", "./PHP/questions.php?f=editQuestion&q=" + question + "&a=" + answer + "&w1=" + wrong1 + "&w2=" + wrong2 + "&w3=" + wrong3 + "&id=" + id, true);
+        console.log("./PHP/questions.php?f=editQuestion&question=" + question + "&answerA=[" + answerA + "]&answerB=[" + answerB + "]&answerC=[" + answerC + "]&answerD=[" + answerD + "]&id=" + id)
+        http.open("GET", "./PHP/questions.php?f=editQuestion&question=" + question + "&answerA=[" + answerA + "]&answerB=[" + answerB + "]&answerC=[" + answerC + "]&answerD=[" + answerD + "]&id=" + id, true);
         http.send();
-        http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let data = JSON.parse(this.response);
-                console.log(data);
-            }
-        }
+        alert("Question edited");
+
+        questionEditScreen.classList.add("d-none");
+        questionScreen.classList.remove("d-none");
+        loadQuestions();
     }
 })
