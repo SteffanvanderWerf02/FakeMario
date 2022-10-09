@@ -2,7 +2,7 @@
 include './db.php';
 
 if ($_GET['f'] == 'getQuestions') {
-  for ($index = 1; $index <= 2; $index++) {
+  for ($index = 1; $index <= 8; $index++) {
 
     $sql = "
     SELECT  questions.Id,
@@ -77,6 +77,25 @@ if ($_GET['f'] == 'editQuestion') {
     $stmt->execute();
     $stmt->close();
   }
+  $sql = "
+    UPDATE answers
+    SET Correct = 0
+    WHERE QuestionId = ?
+    ";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('i', $_GET['id']);
+  $stmt->execute();
+  $stmt->close();
+
+  $sql = "
+    UPDATE answers
+    SET Correct = 1
+    WHERE Id = ?
+    ";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('i', $_GET['correctAwnserId']);
+  $stmt->execute();
+  $stmt->close();
 }
 
 if ($_GET['f'] == 'getQuestion') {
@@ -117,4 +136,22 @@ if ($_GET['f'] == 'getQuestion') {
   $questions[] = array('id' => $id, 'question' => $question, 'answers' => $answers);
 
   echo json_encode($questions);
+}
+
+if ($_GET['f'] == 'getHighscoreBoard') {
+  $sql = "
+    SELECT  *
+    FROM highscore
+    ORDER BY Score DESC
+    Limit 20
+  ";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->execute();
+  $stmt->bind_result($id, $name, $score);
+  while ($stmt->fetch()) {
+    $score[] = array('id' => $id, 'name' => $name, 'score' => $score);
+  }
+  $stmt->close();
+
+  echo json_encode($score);
 }

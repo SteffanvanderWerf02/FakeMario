@@ -34,7 +34,7 @@
             <div class="col-12 mt-2">
               <button
                 class="d-block w-100 mx-auto btn btn-warning"
-                id="Highscores"
+                id="HighscoresBtn"
               >
                 Highscores
               </button>
@@ -51,17 +51,20 @@
         </div>
       </div>
     </div>
-    <div class="container d-none" id="questions">
+    <div class="container-fluid d-none" id="questions">
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8 text-center">
           <div class="row">
             <div class="col-12 my-5">
+              <span class="h4 pointer fw-bold" id="questionsToMenu"
+                >&lt;----
+              </span>
               <h1 class="text-body">Questions</h1>
             </div>
             <div class="col-12 mt-2 bg-white bg-opacity-75">
               <div class="btn btn-success" id="questionEdit">Edit</div>
-              <div id="questionTable"></div>
+              <div id="questionTable" class="table-responsive"></div>
             </div>
           </div>
         </div>
@@ -73,40 +76,62 @@
         <div class="col-8 text-center">
           <div class="row">
             <div class="col-12 my-5">
+              <span class="h4 pointer fw-bold" id="QuestionEditToQuestions"
+                >&lt;----
+              </span>
               <h1 class="text-body" id="editTitle"></h1>
             </div>
             <div class="col-12 mt-2 bg-white bg-opacity-75">
-              <select id="qlist"></select>
-
               <div class="card">
+                <select class="form-control" id="qlist"></select>
                 <div class="card-body">
-                  <input type="hidden" id="uniqueId" value="" />
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="editQuestionInput"
-                  />
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="editAwnserInputA"
-                  />
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="editAwnserInputB"
-                  />
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="editAwnserInputC"
-                  />
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="editAwnserInputD"
-                  />
+                  <div class="mb-2 d-block">
+                    <span>Question</span>
+                    <input type="hidden" id="uniqueId" value="" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editQuestionInput"
+                    />
+                  </div>
+                  <div class="mb-2 d-block">
+                    <span>Answer A</span>
 
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editAwnserInputA"
+                    />
+                  </div>
+                  <div class="mb-2 d-block">
+                    <span>Answer B</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editAwnserInputB"
+                    />
+                  </div>
+                  <div class="mb-2 d-block">
+                    <span>Answer C</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editAwnserInputC"
+                    />
+                  </div>
+                  <div class="mb-2 d-block">
+                    <span>Answer D</span>
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editAwnserInputD"
+                    />
+                  </div>
+                  <div class="mb-2">
+                    <span class="d-block">Correct answer</span>
+                    <select id="editAwnserCorrect"></select>
+                  </div>
                   <div class="btn btn-success" id="questionEditSave">Save</div>
                 </div>
               </div>
@@ -115,8 +140,28 @@
         </div>
       </div>
     </div>
+    <div class="container-fluid d-none" id="highScoresList">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
+          <div class="row">
+            <div class="col-12 my-5">
+              <span class="h4 pointer fw-bold" id="highscoreToMenu"
+                >&lt;----
+              </span>
+              <h1 class="text-body">Highscore Top 20</h1>
+            </div>
+            <div class="col-12 mt-2 bg-white bg-opacity-75">
+              <div id="HighscoreTable" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <script src="./js/backTomenu.js"></script>
     <script src="./js/typed_min.js"></script>
+    <script src="./js/highscore.js"></script>
     <script src="./js/script.js"></script>
     <script src="./js/titlescreen.js"></script>
     <script src="./js/questionscreen.js"></script>
