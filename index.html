@@ -26,7 +26,7 @@
             <div class="col-12 mt-2">
               <button
                 class="d-block w-100 mx-auto btn btn-success"
-                id="StartGame"
+                id="StartGameSettings"
               >
                 Start
               </button>
@@ -153,6 +153,31 @@
             </div>
             <div class="col-12 mt-2 bg-white bg-opacity-75">
               <div id="HighscoreTable" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container d-none" id="gameName">
+      <div class="card mt-5">
+        <div class="card-body">
+          <div class="row">
+            <div class="class-12">
+              <span class="h4 pointer fw-bold" id="gameNameToMenu"
+                >&lt;----
+              </span>
+              <h1 class="text-center">fill in your name</h1>
+              <div class="my-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameInput"
+                  placeholder="Name"
+                />
+                <button class="btn btn-success mt-2" id="StartGame">
+                  Start
+                </button>
+              </div>
             </div>
           </div>
         </div>
