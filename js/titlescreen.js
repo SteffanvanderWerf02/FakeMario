@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     StartGame.addEventListener("click", () => {
         setCookie("name", document.getElementById("nameInput").value, 0.5);
-        setTimeout(() => {
-            document.getElementById("gameName").classList.add("d-none");
-            document.getElementById("game").classList.remove("d-none");
-            document.body.classList.remove("titleScreen");
-        }, 1000);
+
+        document.getElementById("gameName").classList.add("d-none");
+        document.getElementById("game").classList.remove("d-none");
+        document.body.classList.remove("titleScreen");
+
     })
 
 
