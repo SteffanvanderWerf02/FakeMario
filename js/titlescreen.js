@@ -1,6 +1,6 @@
 new Typed('.typedJS',
     {
-        strings: ["NHL Stenden Emmen", "Fake Mario", "Phaiser 3", "3EC's please "],
+        strings: ["NHL Stenden Emmen", "Fake Mario", "Phaser 3", "3EC's please "],
         typeSpeed: 60,
         shuffle: true,
         backSpeed: 40,
@@ -22,11 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     StartGame.addEventListener("click", () => {
-        document.getElementById("gameName").classList.add("d-none");
-        document.getElementById("game").classList.remove("d-none");
-
-        setCookie("name", document.getElementById("gameNameInput").value, 0.5);
+        setCookie("name", document.getElementById("nameInput").value, 0.5);
+        setTimeout(() => {
+            document.getElementById("gameName").classList.add("d-none");
+            document.getElementById("game").classList.remove("d-none");
+            document.body.classList.remove("titleScreen");
+        }, 1000);
     })
+
+
 
     function setCookie(name, value, days) {
         var expires = "";
