@@ -1,6 +1,6 @@
 new Typed('.typedJS',
     {
-        strings: ["NHL Stenden Emmen", "Fake Mario", "Phaser 3", "3EC's please "],
+        strings: ["NHL Stenden Emmen", "Fake Mario Deluxe.", "Phaser 3", "3EC's please "],
         typeSpeed: 60,
         shuffle: true,
         backSpeed: 40,
