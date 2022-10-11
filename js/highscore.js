@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.response);
-                if (data != null) {
+                if (JSON.parse(this.response) != null) {
                     console.log(data);
                     var table = document.createElement('table');
                     table.classList.add("table", "table-striped", "table-hover");
@@ -69,8 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         tbody.appendChild(tr);
                         table.appendChild(tbody);
-                        document.getElementById("questionTable").appendChild(table);
+
                     }
+                    document.getElementById("HighscoreTable").appendChild(table)
                 }
             }
 

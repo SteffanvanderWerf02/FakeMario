@@ -149,9 +149,21 @@ if ($_GET['f'] == 'getHighscoreBoard') {
   $stmt->execute();
   $stmt->bind_result($id, $name, $score);
   while ($stmt->fetch()) {
-    $score[] = array('id' => $id, 'name' => $name, 'score' => $score);
+    $scores[] = array('id' => $id, 'name' => $name, 'score' => $score);
   }
   $stmt->close();
 
-  echo json_encode($score);
+  echo json_encode($scores);
+}
+
+if ($_GET['f'] == 'addHighscore') {
+  $sql = "
+    INSERT INTO highscore (Name, Score)
+    VALUES (?, ?)
+  ";
+  echo $sql;
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('si', $_GET['name'], $_GET['score']);
+  $stmt->execute();
+  $stmt->close();
 }

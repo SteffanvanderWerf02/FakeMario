@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2022 at 03:01 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Gegenereerd op: 12 okt 2022 om 00:35
+-- Serverversie: 10.4.20-MariaDB
+-- PHP-versie: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `answers`
+-- Tabelstructuur voor tabel `answers`
 --
 
 CREATE TABLE `answers` (
@@ -35,7 +35,7 @@ CREATE TABLE `answers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `answers`
+-- Gegevens worden geëxporteerd voor tabel `answers`
 --
 
 INSERT INTO `answers` (`Id`, `QuestionId`, `Answer`, `Correct`) VALUES
@@ -62,10 +62,10 @@ INSERT INTO `answers` (`Id`, `QuestionId`, `Answer`, `Correct`) VALUES
 (25, 6, 'function:myFunction()', 0),
 (26, 6, 'function = myFunction()', 0),
 (27, 6, 'function myFunction()', 1),
-(28, 6, 'Function {myfunction()}', 0),
+(28, 6, 'function {myfunction()}', 0),
 (29, 7, 'function myFunction()', 0),
 (30, 7, 'call function myFunction()', 0),
-(31, 7, 'call myFunction()', 0),
+(31, 7, 'myFunction()', 1),
 (32, 7, 'call = myFunction()', 0),
 (33, 8, 'w2 = window.open(\"http://www.w3schools.com\");', 1),
 (34, 8, ' window.open(\"http://www.w3schools.com\");', 0),
@@ -75,7 +75,7 @@ INSERT INTO `answers` (`Id`, `QuestionId`, `Answer`, `Correct`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `highscore`
+-- Tabelstructuur voor tabel `highscore`
 --
 
 CREATE TABLE `highscore` (
@@ -84,10 +84,17 @@ CREATE TABLE `highscore` (
   `Score` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `highscore`
+--
+
+INSERT INTO `highscore` (`Id`, `Name`, `Score`) VALUES
+(1, 'Steffan', 80);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `questions`
+-- Tabelstructuur voor tabel `questions`
 --
 
 CREATE TABLE `questions` (
@@ -96,7 +103,7 @@ CREATE TABLE `questions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `questions`
+-- Gegevens worden geëxporteerd voor tabel `questions`
 --
 
 INSERT INTO `questions` (`Id`, `Question`) VALUES
@@ -110,56 +117,56 @@ INSERT INTO `questions` (`Id`, `Question`) VALUES
 (8, 'What is the correct JavaScript syntax for opening a new window called \"w2\" ?');
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `answers`
+-- Indexen voor tabel `answers`
 --
 ALTER TABLE `answers`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `fk_question` (`QuestionId`);
 
 --
--- Indexes for table `highscore`
+-- Indexen voor tabel `highscore`
 --
 ALTER TABLE `highscore`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indexes for table `questions`
+-- Indexen voor tabel `questions`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`Id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `answers`
+-- AUTO_INCREMENT voor een tabel `answers`
 --
 ALTER TABLE `answers`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `highscore`
+-- AUTO_INCREMENT voor een tabel `highscore`
 --
 ALTER TABLE `highscore`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT for table `questions`
+-- AUTO_INCREMENT voor een tabel `questions`
 --
 ALTER TABLE `questions`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `answers`
+-- Beperkingen voor tabel `answers`
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `fk_question` FOREIGN KEY (`QuestionId`) REFERENCES `questions` (`Id`);
