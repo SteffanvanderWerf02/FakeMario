@@ -86,6 +86,7 @@ function create() {
 
     //second floor
     platforms.create(50, 330, "buldingblock");
+    platforms.create(10, 170, "buldingblock");
 
     //third floor
     platforms.create(1100, 175, "buldingblock");
@@ -126,12 +127,22 @@ function create() {
 
     cursors = this.input.keyboard.createCursorKeys();
 
-    stars = this.physics.add.staticGroup({
-        key: "star",
-        repeat: 8,
-        setXY: { x: 12, y: 0, stepX: 70 },
-    });
+    stars = this.physics.add.staticGroup();
 
+    //create star locations
+
+    //ground floor
+    stars.create(15, 410, "star");
+    stars.create(550, 535 - 96, "star");
+    stars.create(1150, 535, "star");
+    //first floor
+    stars.create(745, 380, "star");
+    stars.create(270, 300, "star");
+    //second floor
+    stars.create(725, 125, "star");
+    stars.create(100, 90, "star");
+    //third floor
+    stars.create(475, 20, "star");
 
     scoreText = this.add.text(16, 16, "score: 0", {
         fontSize: "32px",
