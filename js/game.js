@@ -27,7 +27,9 @@ var score = 0;
 var gameOver = false;
 var scoreText;
 var whiteSpace;
-
+var pilar1;
+var pilar2;
+var direction = 1;
 var game = new Phaser.Game(config);
 
 function preload() {
@@ -37,6 +39,7 @@ function preload() {
     this.load.image("buldingblock", "./img/block.png");
     this.load.image("star", "./img/star.png");
     this.load.image("moveObjectHolder", "./img/moveObjectHolder.png");
+    this.load.image("pilar", "./img/pilar.png");
     this.load.spritesheet("player", "./img/dude.png", {
         frameWidth: 32,
         frameHeight: 48,
@@ -48,6 +51,7 @@ function create() {
 
     platforms = this.physics.add.staticGroup();
     whiteSpace = this.physics.add.staticGroup();
+    pilar = this.physics.add.staticGroup();
     // Floor
     platforms.create(600, 600, "ground").setScale(3).refreshBody();
 
@@ -57,11 +61,11 @@ function create() {
 
     //Skyplatform floor 2
     platforms.create(275, 250, "skyPlatform");
-    platforms.create(1200, 250, "skyPlatform");
+    platforms.create(1150, 250, "skyPlatform");
 
     //Skyplatform floor 3
 
-    platforms.create(550, 50, "skyPlatform");
+    platforms.create(665, 80, "skyPlatform");
 
     //buldingblocks stair
     platforms.create(550 - 64, 535, "buldingblock");
@@ -76,24 +80,26 @@ function create() {
     platforms.create(550 + 64, 535, "buldingblock");
 
     //buldingblocks jumping block
+
+    //first floor
     platforms.create(1185, 490, "buldingblock");
+
+    //second floor
     platforms.create(50, 330, "buldingblock");
-    platforms.create(50, 330, "buldingblock");
+
+    //third floor
+    platforms.create(1100, 175, "buldingblock");
+    platforms.create(960, 120, "buldingblock");
 
 
     moveablePlatforms = this.physics.add.sprite(610, 250, "buldingblock");
-    const tween = this.tweens.add({
-        targets: this.moveablePlatforms,
-        x: 700,
-        ease: 'Power0',
-        duration: 3000,
-        flipX: true,
-        yoyo: true,
-        repeat: -1,
-    });
+
     moveablePlatforms.setCollideWorldBounds(true);
     whiteSpace.create(660, 280, "moveObjectHolder");
     whiteSpace.create(790, 280, "moveObjectHolder");
+
+    pilar.create(850, 250, "pilar");
+    pilar.create(600, 250, "pilar");
 
     player = this.physics.add.sprite(100, 450, "player");
     player.setCollideWorldBounds(true);
@@ -129,18 +135,25 @@ function create() {
 
     scoreText = this.add.text(16, 16, "score: 0", {
         fontSize: "32px",
-        fill: "#000",
+        fill: "#111",
     });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player, moveablePlatforms);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(moveablePlatforms, whiteSpace);
+
     this.physics.add.overlap(player, stars, collectStar, null, this);
+    this.physics.add.collider(pilar, whiteSpace);
+    this.physics.add.collider(pilar, whiteSpace);
+
 
 }
 
 function update() {
+    this.physics.add.collider(pilar, moveablePlatforms, flipX, null, this);
+    this.physics.add.collider(pilar, moveablePlatforms, flipX, null, this);
+    moveablePlatforms.setVelocityX(direction * 100)
     if (gameOver) {
         return;
     }
@@ -162,6 +175,10 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
     }
+}
+
+function flipX() {
+    direction = - direction
 }
 
 function collectStar(player, star) {
