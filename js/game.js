@@ -356,6 +356,7 @@ document.getElementById("StartGame").addEventListener("click", () => {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("game").classList.add("d-none");
                 document.getElementById("menu").classList.remove("d-none");
+                alert("Game Over! Your score is: " + score + "EC");
             }
         }
 
