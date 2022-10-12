@@ -212,6 +212,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 answerCField.setAttribute("awnserId", data[0].answers[2].answerId);
                 answerDField.value = data[0].answers[3].answer;
                 answerDField.setAttribute("awnserId", data[0].answers[3].answerId);
+
+                answerCorrectFields.innerHTML = "";
+                //load the correct awnser select
+                for (var i = 0; i < data[0].answers.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = data[0].answers[i].answerId;
+                    option.text = data[0].answers[i].answer;
+                    if (data[0].answers[i].isCorrect == 1) {
+                        option.selected = true;
+                    }
+                    answerCorrectFields.appendChild(option);
+                }
             }
         }
     }
