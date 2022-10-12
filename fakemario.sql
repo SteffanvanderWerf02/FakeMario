@@ -89,7 +89,7 @@ CREATE TABLE `highscore` (
 --
 
 INSERT INTO `highscore` (`Id`, `Name`, `Score`) VALUES
-(1, 'Steffan', 80);
+(1, 'Steffan', 60);
 
 -- --------------------------------------------------------
 

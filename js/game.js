@@ -290,8 +290,8 @@ document.getElementById("StartGame").addEventListener("click", () => {
         for (let index = 0; index < 4; index++) {
             if (chosenAnswer == question.answers[index].answer && question.answers[index].isCorrect == 1) {
                 console.log("right answer");
-                score += 10;
-                scoreText.setText("Score: " + score);
+                score += 7.5;
+                scoreText.setText("Score: " + score + "EC");
                 answer1.text = "";
                 answer2.text = "";
                 answer3.text = "";
