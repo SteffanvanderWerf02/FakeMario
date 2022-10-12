@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // selectores,
     let highScoresList = document.getElementById("highScoresList");
     let highScoresBtn = document.getElementById("HighscoresBtn");
     let menu = document.getElementById("menu");
 
+    // when clicked on highscores btn the highscores list will be shown
     highScoresBtn.addEventListener("click", () => {
         highScoresList.classList.remove("d-none");
         menu.classList.add("d-none");
@@ -10,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadScores();
     });
 
+    // load the highscores from the game en generate the table 
     function loadScores() {
         document.getElementById("HighscoreTable").innerHTML = "";
         let http = new XMLHttpRequest()

@@ -1,6 +1,7 @@
 <?php
 include './db.php';
 
+// Get all the quiz questions form the database and store them in an array
 if ($_GET['f'] == 'getQuestions') {
   for ($index = 1; $index <= 8; $index++) {
 
@@ -44,8 +45,8 @@ if ($_GET['f'] == 'getQuestions') {
   echo json_encode($questions);
 }
 
+// edit the question with the given id
 if ($_GET['f'] == 'editQuestion') {
-  print_r($_GET);
   $sql = "
     UPDATE questions
     SET Question = ?
@@ -98,6 +99,7 @@ if ($_GET['f'] == 'editQuestion') {
   $stmt->close();
 }
 
+// get specific question
 if ($_GET['f'] == 'getQuestion') {
   $sql = "
   SELECT  questions.Id,
@@ -138,6 +140,7 @@ if ($_GET['f'] == 'getQuestion') {
   echo json_encode($questions);
 }
 
+// get the best 20 scores and return them in array
 if ($_GET['f'] == 'getHighscoreBoard') {
   $sql = "
     SELECT  *
@@ -156,6 +159,7 @@ if ($_GET['f'] == 'getHighscoreBoard') {
   echo json_encode($scores);
 }
 
+// add new score to the database
 if ($_GET['f'] == 'addHighscore') {
   $sql = "
     INSERT INTO highscore (Name, Score)

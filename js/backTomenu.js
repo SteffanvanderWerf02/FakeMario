@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // selectores,
     let highscoreToMenu = document.getElementById("highscoreToMenu");
     let questionsToMenu = document.getElementById("questionsToMenu");
     let QuestionEditToQuestions = document.getElementById("QuestionEditToQuestions");
     let gameNameToMenu = document.getElementById("gameNameToMenu");
 
+    // events to go back in the applications
     highscoreToMenu.addEventListener("click", () => {
         highScoresList.classList.add("d-none");
         menu.classList.remove("d-none");

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    //selectors
     let question = document.getElementById("newQuestions");
     let questionScreen = document.getElementById("questions");
     let questionEditScreenBtn = document.getElementById("questionEdit");
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let answerCorrectFields = document.getElementById("editAwnserCorrect");
 
-
+    // when clicked on question buton the question table will be shown
     question.addEventListener("click", () => {
         questionScreen.classList.add("d-block");
         questionScreen.classList.remove("d-none");
@@ -26,12 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
         loadQuestions();
     })
 
+    // when clicked on question edit buton the question edit fields will be shown
     questionEditScreenBtn.addEventListener("click", () => {
         questionList.innerHTML = "";
         answerCorrectFields.innerHTML = "";
         questionEditScreen.classList.remove("d-none");
         questionScreen.classList.add("d-none");
 
+        //load questions from the database
         let http = new XMLHttpRequest()
         http.open("GET", "./PHP/questions.php?f=getQuestions", true);
         http.send();
@@ -45,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     questionList.appendChild(option);
                 }
-
+                //set the data in the fields
                 document.getElementById("editTitle").innerHTML = "Question " + data[0].id;
                 questionId.value = data[0].id;
                 questionField.value = data[0].question;
@@ -58,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 answerDField.value = data[0].answers[3].answer;
                 answerDField.setAttribute("awnserId", data[0].answers[3].answerId);
 
+                //load the correct awnser select
                 for (var i = 0; i < data[0].answers.length; i++) {
                     var option = document.createElement("option");
                     option.value = data[0].answers[i].answerId;
@@ -72,10 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // update the question fields when a question select is changed
     questionList.addEventListener("change", (e) => {
         loadQuestiontoInput(e.target.value);
     });
 
+    // when clicked on the save button the question will be updated
     questionEditSaveBtn.addEventListener("click", () => {
         editQuestion(
             questionId.value,
@@ -88,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
     });
 
+    // load the questions from the database and create table with questions
     function loadQuestions() {
         document.getElementById("questionTable").innerHTML = "";
         let http = new XMLHttpRequest()
@@ -184,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // load question selected from Id to the edit fields and put data in the fields
     function loadQuestiontoInput(id) {
         let http = new XMLHttpRequest()
         http.open("GET", "./PHP/questions.php?f=getQuestion&id=" + id, true);
@@ -207,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-
+    // function to update with XMLHttpRequest the question
     function editQuestion(id, question, answerA, answerB, answerC, answerD, correctAwnserId) {
         if (id == "") {
             alert("Please select a question");
